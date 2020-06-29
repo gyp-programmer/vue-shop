@@ -56,27 +56,20 @@ export default {
         if (!valid) return
         // 如果打印出来的结果为一个promise对象，则用await和它紧接的函数上加async修饰为异步即可转化为想要的数据  简化promise
         // data重命名为res
-        const { data: res } = await this.$http.post('login', this.form)
+        const {data: res} = await this.$http.post('login', this.form)
         console.log(res)
         if (res.meta.status !== 200) {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '用户名或者密码错误'
-          })
-        } else {
-          // this.$message({
-          //   showClose: true,
-          //   type: 'success',
-          //   message: '登录成功'
-          // })
-          // 1. 将登陆成功后的token, 保存到客户端的sessionStorage中
-          //     1.1 项目中的登录以外的接口，必须在登录之后访问
-          //     1.2 token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
-          // 2. 通过编程式导航跳转到后台主页，路由地址是/home
-          window.sessionStorage.setItem('token', res.data.token)
-          this.$router.push('/home')
+            return this.$message({
+                showClose: true,
+                type: 'error',
+                message: '用户名或者密码错误'
+            });
         }
+        return this.$message({
+            showClose: true,
+            type: 'success',
+            message: '登录成功'
+        });
       })
     }
   }

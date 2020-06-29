@@ -65,11 +65,11 @@ export default {
             message: '用户名或者密码错误'
           })
         } else {
-          // this.$message({
-          //   showClose: true,
-          //   type: 'success',
-          //   message: '登录成功'
-          // })
+          this.$message({
+            showClose: true,
+            type: 'success',
+            message: '登录成功'
+          })
           // 1. 将登陆成功后的token, 保存到客户端的sessionStorage中
           //     1.1 项目中的登录以外的接口，必须在登录之后访问
           //     1.2 token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
@@ -77,6 +77,7 @@ export default {
           window.sessionStorage.setItem('token', res.data.token)
           this.$router.push('/home')
         }
+        
       })
     }
   }

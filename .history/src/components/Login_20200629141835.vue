@@ -6,9 +6,9 @@
                 <img src="../assets/logo.png" alt="加载失败">
             </div>
             <!-- 登录表单区 -->
-            <el-form label-width="0px" ref="loginFormRef" :model="form" :rules="rules" class="login_form">
+            <el-form label-width="0px" ref="loginFormRef" :model="form" ：rules="rules" class="login_form">
                 <!-- 用户名 -->
-                <el-form-item prop="username">
+                <el-form-item prop="usernmae">
                     <el-input prefix-icon="el-icon-user-solid" v-model="form.username"></el-input>
                 </el-form-item>
                 <!-- 密码 -->
@@ -17,7 +17,7 @@
                 </el-form-item>
                 <!-- 按钮区域 -->
                 <el-form-item class="btns">
-                    <el-button type="primary" @click="login">登录</el-button>
+                    <el-button type="primary">登录</el-button>
                     <el-button type="info" @click="resetLoginForm">重置</el-button>
                 </el-form-item>
             </el-form>
@@ -45,40 +45,12 @@ export default {
         ]
       }
     }
-  },
+  }, 
   methods: {
-    resetLoginForm () {
-      //   console.log(this)
-      this.$refs.loginFormRef.resetFields()
-    },
-    login () {
-      this.$refs.loginFormRef.validate(async valid => {
-        if (!valid) return
-        // 如果打印出来的结果为一个promise对象，则用await和它紧接的函数上加async修饰为异步即可转化为想要的数据  简化promise
-        // data重命名为res
-        const { data: res } = await this.$http.post('login', this.form)
-        console.log(res)
-        if (res.meta.status !== 200) {
-          this.$message({
-            showClose: true,
-            type: 'error',
-            message: '用户名或者密码错误'
-          })
-        } else {
-          // this.$message({
-          //   showClose: true,
-          //   type: 'success',
-          //   message: '登录成功'
-          // })
-          // 1. 将登陆成功后的token, 保存到客户端的sessionStorage中
-          //     1.1 项目中的登录以外的接口，必须在登录之后访问
-          //     1.2 token只应在当前网站打开期间生效，所以将token保存在sessionStorage中
-          // 2. 通过编程式导航跳转到后台主页，路由地址是/home
-          window.sessionStorage.setItem('token', res.data.token)
-          this.$router.push('/home')
-        }
-      })
-    }
+      resetLoginForm() {
+        //   console.log(this)
+        this.$refs.loginFormRef.resetFields()
+      }
   }
 }
 </script>
